@@ -1,8 +1,5 @@
-﻿using Basket.API.Data;
-using Basket.API.Models;
-using BuildingBlocks.CQRS;
+﻿using Discount.Grpc;
 using Discount.Grpc.Protos;
-using FluentValidation;
 
 namespace Basket.API.Basket.StoreBasket;
 
@@ -25,7 +22,7 @@ public class StoreBasketCommandHandler
     public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
     {
         await DeductDiscount(command.Cart, cancellationToken);
-
+        
         await repository.StoreBasket(command.Cart, cancellationToken);
 
         return new StoreBasketResult(command.Cart.UserName);
