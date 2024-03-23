@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discount-grpc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: discount-grpc
+  template:
+    metadata:
+      labels:
+        app: discount-grpc
+    spec:
+      containers:
+      - name: discount-grpc
+        image: sharadit/discountgrpc:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: ASPNETCORE_HTTP_PORTS
+          value: "8080"
+        - name: ConnectionStrings__Database
+          # - name: ASPNETCORE_HTTPS_PORTS
+          #   value: "/https/aspnetapp.pfx"
+          # - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+          #   value: "Sharad@1"
+          # - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+          #   value: "8081"
+          value: "Data Source=discountdb"
+      restartPolicy: Always
+# apiVersion: v1
+#   name: discount-grpc
+---
+# spec:
+#   selector:
+#     app: discount-grpc
+#   ports:
+#   - protocol: TCP
+#     port: 7002
+#     targetPort: 8080
+#   type: ClusterIP
+apiVersion: v1
+kind: Service
+metadata:
+  name: discount-grpc
+spec:
+  type: NodePort
+  selector:
+    app: discount-grpc
+  ports:
+  - port: 8003
+    targetPort: 8080
+    nodePort: 31003

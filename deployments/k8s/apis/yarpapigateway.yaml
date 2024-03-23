@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: yarp-api-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: yarp-api-gateway
+  template:
+    metadata:
+      labels:
+        app: yarp-api-gateway
+    spec:
+      containers:
+      - name: yarp-api-gateway
+        image: sharadit/yarpapigateway:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: ASPNETCORE_HTTP_PORTS
+          value: "8080"
+        - name: ReverseProxy__Clusters__catalog-cluster__Destinations__destination1__Address
+          valueFrom:
+            configMapKeyRef:
+              name: shoppingapp-configmap
+              key: catalogapi_url
+        - name: ReverseProxy__Clusters__basket-cluster__Destinations__destination1__Address
+          valueFrom:
+            configMapKeyRef:
+              name: shoppingapp-configmap
+              key: basketapi_url
+        - name: ReverseProxy__Clusters__ordering-cluster__Destinations__destination1__Address
+          valueFrom:
+            configMapKeyRef:
+              name: shoppingapp-configmap
+              key: orderingapi_url
+        # - name: ASPNETCORE_HTTPS_PORTS
+      #   value: "8081"
+      # - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+      #   value: "Sharad@1"
+      # - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+      #   value: "/https/aspnetapp.pfx"
+      restartPolicy: Always
+# apiVersion: v1
+#     port: 8080
+---
+#     targetPort: 7004
+#   type: ClusterIP
+apiVersion: v1
+kind: Service
+metadata:
+  name: yarp-api-gateway
+spec:
+  type: NodePort
+  selector:
+    app: yarp-api-gateway
+  ports:
+  - port: 8010
+    targetPort: 8080
+    nodePort: 31010

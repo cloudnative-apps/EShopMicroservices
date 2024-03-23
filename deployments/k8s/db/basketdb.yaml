@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: basket-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: basket-db
+  template:
+    metadata:
+      labels:
+        app: basket-db
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:latest
+        env:
+        - name: POSTGRES_USER
+          value: postgres
+        - name: POSTGRES_PASSWORD
+          value: postgres
+        - name: POSTGRES_DB
+          value: BasketDb
+        ports:
+        - containerPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: basket-db
+spec:
+  selector:
+    app: basket-db
+  ports:
+  - protocol: TCP
+    port: 5432
+    targetPort: 5432

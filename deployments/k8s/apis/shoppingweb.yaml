@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shopping-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: shopping-web
+  template:
+    metadata:
+      labels:
+        app: shopping-web
+    spec:
+      containers:
+      - name: shopping-web
+        image: sharadit/shoppingweb:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+        env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: "Development"
+        - name: ASPNETCORE_HTTP_PORTS
+          value: "8080"
+        - name: ApiSettings__GatewayAddress
+          #   value: "/https/aspnetapp.pfx"
+          valueFrom:
+            configMapKeyRef:
+              name: shoppingapp-configmap
+              key: yarpapigw_url
+          # - name: ASPNETCORE_HTTPS_PORTS
+      # - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+      #   value: "Sharad@1"
+      # - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+      #   value: "8081"
+      #value: "http://yarp-api-gateway:8080"
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: shopping-web
+spec:
+  selector:
+    app: shopping-web
+  ports:
+  - protocol: TCP
+    port: 7005
+    targetPort: 8080
+  type: ClusterIP
