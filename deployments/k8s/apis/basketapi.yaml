@@ -34,26 +34,14 @@ spec:
         - name: ConnectionStrings__Redis
           value: "distributedcache:6379"
         - name: GrpcSettings__DiscountUrl
-          value: "https://discount.grpc:8081"
+          value: "http://discount-grpc:8003"
         - name: MessageBroker__Host
-          value: "amqp://guest:guest@rabbitmq:5672"
+          value: "amqp://ecommerce-mq:5672"
         - name: MessageBroker__UserName
           value: "guest"
         - name: MessageBroker__Password
           value: "guest"
       restartPolicy: Always
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: basket-api
-# spec:
-#   selector:
-#     app: basket-api
-#   ports:
-#   - protocol: TCP
-#     port: 7001
-#     targetPort: 8080
-#   type: ClusterIP
 ---
 apiVersion: v1
 kind: Service
