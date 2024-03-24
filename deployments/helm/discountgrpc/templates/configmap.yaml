@@ -1,0 +1,13 @@
+{{- $name := include "discountgrpc.fullname" . -}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cfg-{{ $name }}"
+  labels:
+    app: {{ template "discountgrpc.name" . }}
+    chart: {{ template "discountgrpc.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  ConnectionStrings__Database: Data Source=discountdb

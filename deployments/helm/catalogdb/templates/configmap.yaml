@@ -1,0 +1,17 @@
+{{- $name := include "catalogdb.fullname" . -}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cfg-{{ $name }}"
+  labels:
+    app: {{ template "catalogdb.name" . }}
+    chart: {{ template "catalogdb.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: CatalogDb
+  
+ 

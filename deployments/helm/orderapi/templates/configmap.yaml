@@ -1,0 +1,17 @@
+{{- $name := include "orderapi.fullname" . -}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cfg-{{ $name }}"
+  labels:
+    app: {{ template "orderapi.name" . }}
+    chart: {{ template "orderapi.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  ConnectionStrings__Database: Server=orderdb;Database=OrderDb;User Id=sa;Password=SwN12345678;Encrypt=False;TrustServerCertificate=True
+  MessageBroker__Host: amqp://ecommerce-mq:5672
+  MessageBroker__UserName: guest
+  MessageBroker__Password: guest
+  FeatureManagement__OrderFullfilment: "false"

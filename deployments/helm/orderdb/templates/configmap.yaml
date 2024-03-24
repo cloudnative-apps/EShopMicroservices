@@ -1,0 +1,14 @@
+{{- $name := include "orderdb.fullname" . -}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cfg-{{ $name }}"
+  labels:
+    app: {{ template "orderdb.name" . }}
+    chart: {{ template "orderdb.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  SA_PASSWORD: SwN12345678
+  ACCEPT_EULA: "Y"

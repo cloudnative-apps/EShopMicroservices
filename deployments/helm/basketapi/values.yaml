@@ -12,16 +12,16 @@ image:
 
 imagePullSecrets: []
 nameOverride: ""
-fullnameOverride: ""
+fullnameOverride: "basketapi"
 
-# serviceAccount:
-#   # Specifies whether a service account should be created
-#   create: true
-#   # Annotations to add to the service account
-#   annotations: {}
-#   # The name of the service account to use.
-#   # If not set and create is true, a name is generated using the fullname template
-#   name: ""
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: false
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
 
 podAnnotations: {}
 
@@ -85,19 +85,34 @@ affinity: {}
 
 
 env:
-- name: ASPNETCORE_ENVIRONMENT
-  value: "Development"
-- name: ASPNETCORE_HTTP_PORTS
-  value: "8080"
-- name: ConnectionStrings__Database
-  value: "Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true"
-- name: ConnectionStrings__Redis
-  value: "distributedcache:6379"
-- name: GrpcSettings__DiscountUrl
-  value: "http://discount-grpc:8003"
-- name: MessageBroker__Host
-  value: "amqp://ecommerce-mq:5672"
-- name: MessageBroker__UserName
-  value: "guest"
-- name: MessageBroker__Password
-  value: "guest"
+  values:
+  - name: ASPNETCORE_ENVIRONMENT
+    value: Development
+  - name: ASPNETCORE_HTTP_PORTS
+    value: 8080
+  urls:
+  # - name: ConnectionStrings__Database
+  #   value: "Server=basketdb;Port=5432;Database=BasketDb;User Id=postgres;Password=postgres;Include Error Detail=true"
+  # - name: ConnectionStrings__Redis
+  #   value: "distributedcache:6379"
+  # - name: GrpcSettings__DiscountUrl
+  #   value: "http://discount-grpc:8003"
+  # - name: MessageBroker__Host
+  #   value: "amqp://ecommerce-mq:5672"
+  # - name: MessageBroker__UserName
+  #   value: "guest"
+  # - name: MessageBroker__Password
+  #   value: "guest"
+  configmap:
+  - name: ConnectionStrings__Database
+    key: ConnectionStrings__Database
+  - name: ConnectionStrings__Redis
+    key: ConnectionStrings__Redis
+  - name: GrpcSettings__DiscountUrl
+    key: GrpcSettings__DiscountUrl
+  - name: MessageBroker__Host
+    key: MessageBroker__Host
+  - name: MessageBroker__UserName
+    key: MessageBroker__UserName
+  - name: MessageBroker__Password
+    key: MessageBroker__Password

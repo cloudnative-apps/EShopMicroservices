@@ -1,0 +1,15 @@
+{{- $name := include "messagebroker.fullname" . -}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cfg-{{ $name }}"
+  labels:
+    app: {{ template "messagebroker.name" . }}
+    chart: {{ template "messagebroker.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  RABBITMQ_DEFAULT_USER: guest
+  RABBITMQ_DEFAULT_PASS: guest
+ 

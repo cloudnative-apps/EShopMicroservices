@@ -1,0 +1,13 @@
+{{- $name := include "shoppingweb.fullname" . -}}
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "cfg-{{ $name }}"
+  labels:
+    app: {{ template "shoppingweb.name" . }}
+    chart: {{ template "shoppingweb.chart" .}}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+data:
+  ApiSettings__GatewayAddress: http://yarp-api-gateway:8010

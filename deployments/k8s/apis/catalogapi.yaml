@@ -21,14 +21,7 @@ spec:
         - name: ASPNETCORE_HTTP_PORTS
           value: "8080"
         - name: ConnectionStrings__Database
-          # - name: ASPNETCORE_HTTPS_PORTS
-          #   value: "/https/aspnetapp.pfx"
-          # - name: ASPNETCORE_Kestrel__Certificates__Default__Path
-          #   value: "Sharad@1"
-          # - name: ASPNETCORE_Kestrel__Certificates__Default__Password
-          #   value: "8081"
           value: "Server=catalogdb;Port=5432;Database=CatalogDb;User Id=postgres;Password=postgres;Include Error Detail=true"
-
         # resources:
         #   requests:
         #     memory: "64Mi"
@@ -38,32 +31,8 @@ spec:
         #     cpu: "500m"
         ports:
         - containerPort: 8080
-        #- containerPort: 8081
-      #   volumeMounts:
-      #   - name: aspnet-https
-      #     mountPath: /https
-      #     readOnly: true
-      # volumes:
-      # - name: aspnet-https
-      #   hostPath:
-      #     path: /home/user/.aspnet/https
 
-# metadata:
 ---
-#   name: catalog-api
-# spec:
-#   selector:
-#     app: catalog-api
-#   ports:
-#   - name: http
-#     protocol: TCP
-#     port: 7000
-#     targetPort: 8080
-#   type: ClusterIP
-# - name: https
-#   protocol: TCP
-#   port: 8081
-#   targetPort: 8081
 apiVersion: v1
 kind: Service
 metadata:
