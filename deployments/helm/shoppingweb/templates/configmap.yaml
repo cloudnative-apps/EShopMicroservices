@@ -10,4 +10,4 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 data:
-  ApiSettings__GatewayAddress: http://yarp-api-gateway:8010
+  ApiSettings__GatewayAddress: http://yarpgateway:8010
