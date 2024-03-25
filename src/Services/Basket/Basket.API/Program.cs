@@ -1,5 +1,6 @@
 using Basket.API.Data;
 using Basket.API.Models;
+using BuildingBlocks;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
 using Carter;
@@ -7,9 +8,13 @@ using Discount.Grpc.Protos;
 using HealthChecks.UI.Client;
 using Marten;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
- 
+
+// Addd serilog
+builder.Logging.ClearProviders();
+builder.Host.UseSerilog(Logging.ConfigureLogger);
 
 var assembly = typeof(Program).Assembly;
 builder.Services.AddCarter();

@@ -1,7 +1,23 @@
+using BuildingBlocks;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+// If needed, Clear default providers
+builder.Logging.ClearProviders();
+
+// Use Serilog
+//builder.Host.UseSerilog((hostContext, services, configuration) => {
+//    configuration
+//        .WriteTo.File("serilog-file.txt")
+//        .WriteTo.Console();
+//});
+
+builder.Host.UseSerilog(Logging.ConfigureLogger);
+
 
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(config =>

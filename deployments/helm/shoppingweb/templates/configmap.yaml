@@ -11,3 +11,4 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   ApiSettings__GatewayAddress: http://yarpgateway:8010
+  ElasticConfiguration__Uri: http://elasticsearch:9200

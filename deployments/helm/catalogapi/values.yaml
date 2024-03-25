@@ -93,3 +93,5 @@ env:
   configmap:
   - name: ConnectionStrings__Database
     key: ConnectionStrings__Database
+  - name: ElasticConfiguration__Uri
+    key: ElasticConfiguration__Uri

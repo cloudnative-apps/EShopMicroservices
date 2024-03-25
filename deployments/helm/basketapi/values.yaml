@@ -116,3 +116,5 @@ env:
     key: MessageBroker__UserName
   - name: MessageBroker__Password
     key: MessageBroker__Password
+  - name: ElasticConfiguration__Uri
+    key: ElasticConfiguration__Uri

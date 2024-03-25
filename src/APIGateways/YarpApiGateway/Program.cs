@@ -1,6 +1,12 @@
+using BuildingBlocks;
 using Microsoft.AspNetCore.RateLimiting;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+// Addd serilog
+builder.Logging.ClearProviders();
+builder.Host.UseSerilog(Logging.ConfigureLogger);
+
 
 // Add services to the container.
 builder.Services.AddReverseProxy()

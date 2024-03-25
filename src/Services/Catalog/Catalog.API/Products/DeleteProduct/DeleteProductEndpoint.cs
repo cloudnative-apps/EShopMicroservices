@@ -1,4 +1,6 @@
 ﻿
+using Serilog;
+
 namespace Catalog.API.Products.DeleteProduct;
 
 //public record DeleteProductRequest(Guid Id);
@@ -10,10 +12,13 @@ public class DeleteProductEndpoint : ICarterModule
     {
         app.MapDelete("/products/{id}", async (Guid id, ISender sender) =>
         {
+            Log.Information($"/products/{id}  delete called");
+
             var result = await sender.Send(new DeleteProductCommand(id));
 
             var response = result.Adapt<DeleteProductResponse>();
 
+            Log.Information($"/products/{id}  delete response fetched");
             return Results.Ok(response);
         })
         .WithName("DeleteProduct")

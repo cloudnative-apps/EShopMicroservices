@@ -5,6 +5,7 @@ using Discount.Grpc.Protos;
 using Grpc.Core;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace Discount.Grpc.Services
 {
@@ -14,6 +15,8 @@ namespace Discount.Grpc.Services
     {
         public override async Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
         {
+            Log.Information($"/GetDiscount called");
+
             var coupon = await dbContext
                 .Coupons
                 .FirstOrDefaultAsync(x => x.ProductName == request.ProductName);
@@ -24,11 +27,16 @@ namespace Discount.Grpc.Services
             logger.LogInformation("Discount is retrieved for ProductName : {productName}, Amount : {amount}", coupon.ProductName, coupon.Amount);
 
             var couponModel = coupon.Adapt<CouponModel>();
+
+            Log.Information($"/GetDiscount response returned");
+
             return couponModel;
         }
 
         public override async Task<CouponModel> CreateDiscount(CreateDiscountRequest request, ServerCallContext context)
         {
+            Log.Information($"/CreateDiscount called");
+
             var coupon = request.Coupon.Adapt<Coupon>();
             if (coupon is null)
                 throw new RpcException(new Status(StatusCode.InvalidArgument, "Invalid request object."));
@@ -39,6 +47,9 @@ namespace Discount.Grpc.Services
             logger.LogInformation("Discount is successfully created. ProductName : {ProductName}", coupon.ProductName);
 
             var couponModel = coupon.Adapt<CouponModel>();
+
+            Log.Information($"/CreateDiscount response returned");
+
             return couponModel;
         }
 

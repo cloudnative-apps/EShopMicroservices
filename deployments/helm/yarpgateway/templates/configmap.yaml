@@ -13,3 +13,4 @@ data:
   ReverseProxy__Clusters__catalog-cluster__Destinations__destination1__Address: http://catalogapi:8000
   ReverseProxy__Clusters__basket-cluster__Destinations__destination1__Address: http://basketapi:8001
   ReverseProxy__Clusters__ordering-cluster__Destinations__destination1__Address: http://orderingapi:8004
+  ElasticConfiguration__Uri: http://elasticsearch:9200

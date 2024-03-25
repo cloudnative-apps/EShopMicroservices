@@ -1,4 +1,6 @@
 ﻿
+using Serilog;
+
 namespace Catalog.API.Products.GetProductById;
 
 //public record GetProductByIdRequest();
@@ -10,9 +12,13 @@ public class GetProductByIdEndpoint : ICarterModule
     {
         app.MapGet("/products/{id}", async (Guid id, ISender sender) =>
         {
+            Log.Information($"/products/{id} called");
+
             var result = await sender.Send(new GetProductByIdQuery(id));
 
             var response = result.Adapt<GetProductByIdResponse>();
+
+            Log.Information($"/products/{id} response fetched");
 
             return Results.Ok(response);
         })

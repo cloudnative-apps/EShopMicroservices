@@ -1,4 +1,5 @@
 ﻿using Ordering.Application.Orders.Queries.GetOrdersByCustomer;
+using Serilog;
 
 namespace Ordering.API.Endpoints;
 
@@ -15,9 +16,14 @@ public class GetOrdersByCustomer : ICarterModule
     {
         app.MapGet("/orders/customer/{customerId}", async (Guid customerId, ISender sender) =>
         {
+
+            Log.Information($"/orders/customer/{customerId} get called");
+
             var result = await sender.Send(new GetOrdersByCustomerQuery(customerId));
 
             var response = result.Adapt<GetOrdersByCustomerResponse>();
+
+            Log.Information($"/orders/customer/{customerId} resposne fetched");
 
             return Results.Ok(response);
         })

@@ -11,3 +11,4 @@ metadata:
     heritage: {{ .Release.Service }}
 data:
   ConnectionStrings__Database: Data Source=discountdb
+  ElasticConfiguration__Uri: http://elasticsearch:9200

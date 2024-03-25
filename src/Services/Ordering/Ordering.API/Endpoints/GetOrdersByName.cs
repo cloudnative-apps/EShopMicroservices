@@ -1,4 +1,6 @@
 ﻿using Ordering.Application.Orders.Queries.GetOrdersByName;
+using Ordering.Domain.ValueObjects;
+using Serilog;
 
 namespace Ordering.API.Endpoints;
 
@@ -15,9 +17,14 @@ public class GetOrdersByName : ICarterModule
     {
         app.MapGet("/orders/{orderName}", async (string orderName, ISender sender) =>
         {
+
+            Log.Information($"/orders/{orderName} orderName called");
+
             var result = await sender.Send(new GetOrdersByNameQuery(orderName));
 
             var response = result.Adapt<GetOrdersByNameResponse>();
+
+            Log.Information($"/orders/{orderName} orderName response fecthed");
 
             return Results.Ok(response);
         })

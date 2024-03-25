@@ -1,5 +1,6 @@
 ﻿using Carter;
 using Microsoft.AspNetCore.Hosting.Server;
+using Serilog;
 
 namespace Catalog.API.Products.CreateProduct;
 
@@ -14,11 +15,17 @@ public class CreateProductEndpoint : ICarterModule
         app.MapPost("/products",
             async (CreateProductRequest request, ISender sender) =>
             {
+
+                Log.Information($"/products create called");
+
                 var command = request.Adapt<CreateProductCommand>();
 
                 var result = await sender.Send(command);
 
                 var response = result.Adapt<CreateProductResponse>();
+
+                Log.Information($"/products create response fetched with id {response.Id}");
+
 
                 return Results.Created($"/products/{response.Id}", response);
 

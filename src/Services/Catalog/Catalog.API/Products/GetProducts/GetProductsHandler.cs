@@ -1,4 +1,6 @@
-﻿namespace Catalog.API.Products.GetProducts;
+﻿using Serilog;
+
+namespace Catalog.API.Products.GetProducts;
 
 public record GetProductsQuery(int? PageNumber = 1, int? PageSize = 10) : IQuery<GetProductsResult>;
 public record GetProductsResult(IEnumerable<Product> Products);
@@ -9,9 +11,10 @@ internal class GetProductsQueryHandler
 {
     public async Task<GetProductsResult> Handle(GetProductsQuery query, CancellationToken cancellationToken)
     {
+        Log.Information("/products Handle called");
         var products = await session.Query<Product>()
             .ToPagedListAsync(query.PageNumber ?? 1, query.PageSize ?? 10, cancellationToken);
-
+        Log.Information("/products Handle fetched products");
         return new GetProductsResult(products);
     }
 }

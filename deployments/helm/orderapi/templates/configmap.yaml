@@ -15,3 +15,4 @@ data:
   MessageBroker__UserName: guest
   MessageBroker__Password: guest
   FeatureManagement__OrderFullfilment: "false"
+  ElasticConfiguration__Uri: http://elasticsearch:9200

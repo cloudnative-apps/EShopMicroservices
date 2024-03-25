@@ -1,4 +1,5 @@
 ﻿using Ordering.Application.Orders.Commands.CreateOrder;
+using Serilog;
 
 namespace Ordering.API.Endpoints;
 
@@ -16,11 +17,17 @@ public class CreateOrder : ICarterModule
     {
         app.MapPost("/orders", async (CreateOrderRequest request, ISender sender) =>
         {
+
+            Log.Information($"/orders called");
+
             var command = request.Adapt<CreateOrderCommand>();
 
             var result = await sender.Send(command);
 
             var response = result.Adapt<CreateOrderResponse>();
+
+            Log.Information($"/orders  response fetched order id : {response.Id}");
+
 
             return Results.Created($"/orders/{response.Id}", response);
         })

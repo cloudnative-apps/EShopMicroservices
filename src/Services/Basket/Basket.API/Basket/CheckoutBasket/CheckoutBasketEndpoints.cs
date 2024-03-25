@@ -2,6 +2,7 @@
 using Carter;
 using Mapster;
 using MediatR;
+using Serilog;
 
 namespace Basket.API.Basket.CheckoutBasket;
 
@@ -14,11 +15,17 @@ public class CheckoutBasketEndpoints : ICarterModule
     {
         app.MapPost("/basket/checkout", async (CheckoutBasketRequest request, ISender sender) =>
         {
+
+            Log.Information($"/basket/checkout called");
+
             var command = request.Adapt<CheckoutBasketCommand>();
 
             var result = await sender.Send(command);
 
             var response = result.Adapt<CheckoutBasketResponse>();
+
+            Log.Information($"/basket/checkout response fetched");
+
 
             return Results.Ok(response);
         })

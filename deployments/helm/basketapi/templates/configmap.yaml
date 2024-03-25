@@ -16,3 +16,4 @@ data:
   MessageBroker__Host: amqp://ecommerce-mq:5672
   MessageBroker__UserName: guest
   MessageBroker__Password: guest
+  ElasticConfiguration__Uri: http://elasticsearch:9200

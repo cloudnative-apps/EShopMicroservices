@@ -1,4 +1,6 @@
-﻿namespace Basket.API.Basket.StoreBasket;
+﻿using Serilog;
+
+namespace Basket.API.Basket.StoreBasket;
 
 public record StoreBasketRequest(ShoppingCart Cart);
 public record StoreBasketResponse(string UserName);
@@ -9,11 +11,17 @@ public class StoreBasketEndpoints : ICarterModule
     {
         app.MapPost("/basket", async (StoreBasketRequest request, ISender sender) =>
         {
+
+            Log.Information($"/basket store called");
+
             var command = request.Adapt<StoreBasketCommand>();
 
             var result = await sender.Send(command);
 
             var response = result.Adapt<StoreBasketResponse>();
+
+            Log.Information($"/basket store resonse fetched");
+
 
             return Results.Created($"/basket/{response.UserName}", response);
         })

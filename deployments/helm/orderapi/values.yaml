@@ -101,4 +101,5 @@ env:
     key: MessageBroker__Password
   - name: FeatureManagement__OrderFullfilment
     key: FeatureManagement__OrderFullfilment
-
+  - name: ElasticConfiguration__Uri
+    key: ElasticConfiguration__Uri

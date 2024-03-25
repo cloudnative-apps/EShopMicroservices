@@ -92,3 +92,5 @@ env:
   configmap:
   - name: ApiSettings__GatewayAddress
     key: ApiSettings__GatewayAddress
+  - name: ElasticConfiguration__Uri
+    key: ElasticConfiguration__Uri

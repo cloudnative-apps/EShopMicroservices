@@ -1,4 +1,6 @@
 ﻿using Ordering.Application.Orders.Commands.UpdateOrder;
+using Ordering.Domain.ValueObjects;
+using Serilog;
 
 namespace Ordering.API.Endpoints;
 
@@ -16,11 +18,16 @@ public class UpdateOrder : ICarterModule
     {
         app.MapPut("/orders", async (UpdateOrderRequest request, ISender sender) =>
         {
+
+            Log.Information($"/orders UpdateOrder called");
+
             var command = request.Adapt<UpdateOrderCommand>();
 
             var result = await sender.Send(command);
 
             var response = result.Adapt<UpdateOrderResponse>();
+
+            Log.Information($"/orders UpdateOrder response fetched");
 
             return Results.Ok(response);
         })

@@ -1,4 +1,6 @@
-﻿namespace Basket.API.Basket.DeleteBasket;
+﻿using Serilog;
+
+namespace Basket.API.Basket.DeleteBasket;
 
 //public record DeleteBasketRequest(string UserName);
 public record DeleteBasketResponse(bool IsSuccess);
@@ -9,9 +11,14 @@ public class DeleteBasketEndpoints : ICarterModule
     {
         app.MapDelete("/basket/{userName}", async (string userName, ISender sender) =>
         {
+
+            Log.Information($"/basket/{userName} delete called");
+
             var result = await sender.Send(new DeleteBasketCommand(userName));
 
             var response = result.Adapt<DeleteBasketResponse>();
+
+            Log.Information($"/basket/{userName} delete response fetched");
 
             return Results.Ok(response);
         })

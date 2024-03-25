@@ -1,4 +1,5 @@
 ﻿using Ordering.Application.Orders.Commands.DeleteOrder;
+using Serilog;
 
 namespace Ordering.API.Endpoints;
 
@@ -16,9 +17,13 @@ public class DeleteOrder : ICarterModule
     {
         app.MapDelete("/orders/{id}", async (Guid Id, ISender sender) =>
         {
+            Log.Information($"/orders/{Id} delete called");
+
             var result = await sender.Send(new DeleteOrderCommand(Id));
 
             var response = result.Adapt<DeleteOrderResponse>();
+
+            Log.Information($"/orders/{Id} delete response fetched");
 
             return Results.Ok(response);
         })

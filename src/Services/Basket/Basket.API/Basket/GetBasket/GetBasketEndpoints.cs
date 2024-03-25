@@ -1,4 +1,6 @@
-﻿namespace Basket.API.Basket.GetBasket;
+﻿using Serilog;
+
+namespace Basket.API.Basket.GetBasket;
 
 //public record GetBasketRequest(string UserName); 
 public record GetBasketResponse(ShoppingCart Cart);
@@ -9,9 +11,14 @@ public class GetBasketEndpoints : ICarterModule
     {
         app.MapGet("/basket/{userName}", async (string userName, ISender sender) =>
         {
+
+            Log.Information($"/basket/{userName} get called");
+
             var result = await sender.Send(new GetBasketQuery(userName));
 
             var respose = result.Adapt<GetBasketResponse>();
+
+            Log.Information($"/basket/{userName} get resposne fetched");
 
             return Results.Ok(respose);
         })

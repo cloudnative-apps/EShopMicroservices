@@ -96,3 +96,5 @@ env:
     key: ReverseProxy__Clusters__basket-cluster__Destinations__destination1__Address
   - name: ReverseProxy__Clusters__ordering-cluster__Destinations__destination1__Address
     key: ReverseProxy__Clusters__ordering-cluster__Destinations__destination1__Address
+  - name: ElasticConfiguration__Uri
+    key: ElasticConfiguration__Uri
