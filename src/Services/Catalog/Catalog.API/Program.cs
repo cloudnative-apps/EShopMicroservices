@@ -2,9 +2,13 @@ using BuildingBlocks;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
 using Serilog;
+using BuildingBlocks.Observability;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add observability code here, 
+//builder.Services.AddObservability("CatalogService", builder.Configuration);
+builder.ConfigureOpenTelemetry();
 
 // If needed, Clear default providers
 builder.Logging.ClearProviders();

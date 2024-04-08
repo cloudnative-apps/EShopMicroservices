@@ -115,3 +115,14 @@ Sure, here's a formatted version of the provided text suitable for a Markdown fi
   - Orchestrating of microservices and backing services (databases, distributed caches, message brokers, etc.)
   - Override Environment variables
 
+
+## Observability
+
+dotnet add package OpenTelemetry.Exporter.Console
+dotnet add package OpenTelemetry.Extensions.Hosting
+dotnet add package OpenTelemetry.Instrumentation.AspNetCore
+dotnet add package OpenTelemetry.Instrumentation.EventCounters --prerelease
+dotnet add package OpenTelemetry.Instrumentation.Runtime
+dotnet add package OpenTelemetry.Instrumentation.SqlClient --prerelease
+dotnet add package OpenTelemetry.Instrumentation.Http
+
